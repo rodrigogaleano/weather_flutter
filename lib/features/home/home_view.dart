@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../support/style/app_fonts.dart';
 import 'components/circle_info_icon.dart';
 
+abstract class HomeViewModelProtocol with ChangeNotifier {}
+
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
 
