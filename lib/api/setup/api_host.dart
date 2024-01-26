@@ -7,7 +7,6 @@ class ApiHost {
 
   static Map<String, String> get defaultQueryParams {
     return {
-      'units': 'metric',
       'appid': '602dcffff671d09fbb0b505f983e09d6',
     };
   }

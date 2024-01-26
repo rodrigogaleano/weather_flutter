@@ -3,7 +3,7 @@ class Endpoint {
   dynamic data;
   String method;
   String? contentType;
-  Map<String, String>? queryParameters;
+  Map<String, dynamic>? queryParameters;
 
   Endpoint({
     required this.path,
