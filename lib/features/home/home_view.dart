@@ -98,7 +98,7 @@ class HomeView extends StatelessWidget {
               )
             ],
           ),
-          const Spacer(),
+          const Spacer(flex: 2),
         ],
       ),
     );
