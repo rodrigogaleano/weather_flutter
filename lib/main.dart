@@ -6,6 +6,7 @@ import 'localization/localize.dart';
 import 'support/utils/service_locator/service_locator.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   initializeDependencies();
 
   runApp(
