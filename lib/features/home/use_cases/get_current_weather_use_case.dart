@@ -34,8 +34,12 @@ class GetCurrentWeatherUseCase extends GetCurrentWeatherUseCaseProtocol {
       latitude: latitude,
       longitude: longitude,
       success: (response) {
-        final weather = CurrentWeather.fromMap(response);
-        success?.call(weather);
+        try {
+          final weather = CurrentWeather.fromMap(response);
+          success?.call(weather);
+        } on Error catch (error) {
+          failure?.call(error.internalError());
+        }
       },
       failure: (error) {
         failure?.call(error.asServerError());

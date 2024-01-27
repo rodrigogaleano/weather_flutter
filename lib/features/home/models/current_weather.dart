@@ -1,10 +1,18 @@
 class CurrentWeather {
-  String main;
+  String icon;
+  String localName;
+  String description;
+  int humidity;
+  double windSpeed;
   double temperature;
 
   CurrentWeather.fromMap(Map<String, dynamic> map)
-      : main = map['weather']['main'],
-        temperature = map['main']['temp'];
+      : localName = map['name'],
+        icon = map['weather'][0]['icon'],
+        windSpeed = map['wind']['speed'],
+        temperature = map['main']['temp'],
+        humidity = map['main']['humidity'],
+        description = map['weather'][0]['main'];
 }
 
 // {

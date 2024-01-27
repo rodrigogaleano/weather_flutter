@@ -25,6 +25,6 @@ class _HomeViewControllerState extends State<HomeViewController> {
 
   @override
   Widget build(BuildContext context) {
-    return const HomeView();
+    return HomeView(viewModel: viewModel);
   }
 }
