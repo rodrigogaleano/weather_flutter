@@ -1,17 +1,24 @@
 import '../../support/extensions/double.dart';
 import '../../support/utils/constants.dart';
+import '../../support/utils/geo_locator/geo_locator_provider.dart';
 import 'home_view_controller.dart';
 import 'models/current_weather.dart';
+import 'models/weather_request.dart';
 import 'use_cases/get_current_weather_use_case.dart';
 
 class HomeViewModel extends HomeProtocol {
   bool _isLoading = false;
   String _errorMessage = '';
-  CurrentWeather? _currentWeather;
+  late CurrentWeather _currentWeather;
+  late WeatherRequest _weatherRequest;
 
+  final GeoLocatorProviderProtocol geoLocatorProvider;
   final GetCurrentWeatherUseCaseProtocol getCurrentWeatherUseCase;
 
-  HomeViewModel({required this.getCurrentWeatherUseCase});
+  HomeViewModel({
+    required this.geoLocatorProvider,
+    required this.getCurrentWeatherUseCase,
+  });
 
   @override
   bool get isLoading => _isLoading;
@@ -20,30 +27,40 @@ class HomeViewModel extends HomeProtocol {
   String get errorMessage => _errorMessage;
 
   @override
-  String get humidity => '${_currentWeather?.humidity}%';
+  String get humidity => '${_currentWeather.humidity}%';
 
   @override
-  String get localName => _currentWeather?.localName ?? '';
+  String get localName => _currentWeather.localName;
 
   @override
-  String get description => _currentWeather?.description ?? '';
+  String get description => _currentWeather.description;
 
   @override
-  String get iconPath => Constants.openWeatherIconBaseUrl(_currentWeather?.icon);
+  String get iconPath => Constants.openWeatherIconBaseUrl(_currentWeather.icon);
 
   @override
-  String get currentTemperature => '${_currentWeather?.temperature.round()}\u00B0';
+  String get currentTemperature => '${_currentWeather.temperature.round()}\u00B0';
 
   @override
-  String get windSpeed => '${_currentWeather?.windSpeed.toKilometerPerHour()}km/h';
+  String get windSpeed => '${_currentWeather.windSpeed.toKilometerPerHour()}km/h';
 
   @override
-  void loadContent() {
+  Future<void> loadContent() async {
     _setLoading(true);
+    await geoLocatorProvider.getCurrentPosition(
+      success: (position) {
+        _weatherRequest = WeatherRequest(
+          latitude: position.latitude,
+          longitude: position.longitude,
+        );
+      },
+    );
+    _getCurrentWeather();
+  }
+
+  void _getCurrentWeather() {
     getCurrentWeatherUseCase.execute(
-      // TODO: Solicitar localização do usuário
-      latitude: -22.5365,
-      longitude: -55.7267,
+      params: _weatherRequest,
       success: (currentWeather) {
         _currentWeather = currentWeather;
       },

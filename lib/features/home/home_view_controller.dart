@@ -4,7 +4,7 @@ import '../../support/utils/service_locator/service_locator.dart';
 import 'home_view.dart';
 
 abstract class HomeProtocol extends HomeViewModelProtocol {
-  void loadContent();
+  Future<void> loadContent();
 }
 
 class HomeViewController extends StatefulWidget {

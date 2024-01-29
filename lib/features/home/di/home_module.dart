@@ -1,4 +1,5 @@
 import '../../../api/routes/weather_routes.dart';
+import '../../../support/utils/geo_locator/geo_locator_provider.dart';
 import '../../../support/utils/service_locator/app_module.dart';
 import '../../../support/utils/service_locator/service_locator.dart';
 import '../home_view_controller.dart';
@@ -18,6 +19,7 @@ class HomeModule extends AppModule {
     /// ViewModel
     ServiceLocator.registerFactory<HomeProtocol>(() {
       return HomeViewModel(
+        geoLocatorProvider: ServiceLocator.get<GeoLocatorProviderProtocol>(),
         getCurrentWeatherUseCase: ServiceLocator.get<GetCurrentWeatherUseCaseProtocol>(),
       );
     });

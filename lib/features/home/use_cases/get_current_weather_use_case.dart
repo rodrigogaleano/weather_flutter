@@ -3,14 +3,14 @@ import 'dart:ui';
 import '../../../api/routes/weather_routes.dart';
 import '../../../models/server_error.dart';
 import '../models/current_weather.dart';
+import '../models/weather_request.dart';
 
 typedef Success = void Function(CurrentWeather currentWeather);
 typedef Failure = void Function(ServerError error);
 
 abstract class GetCurrentWeatherUseCaseProtocol {
   void execute({
-    required double latitude,
-    required double longitude,
+    required WeatherRequest params,
     Success? success,
     Failure? failure,
     VoidCallback? onComplete,
@@ -24,15 +24,13 @@ class GetCurrentWeatherUseCase extends GetCurrentWeatherUseCaseProtocol {
 
   @override
   void execute({
-    required double latitude,
-    required double longitude,
+    required WeatherRequest params,
     Success? success,
     Failure? failure,
     VoidCallback? onComplete,
   }) {
     routes.getCurrentWeather(
-      latitude: latitude,
-      longitude: longitude,
+      params: params,
       success: (response) {
         try {
           final weather = CurrentWeather.fromMap(response);
