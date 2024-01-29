@@ -12,6 +12,11 @@ abstract class WeatherRoutesProtocol {
     Failure? failure,
     VoidCallback? onComplete,
   });
+  void getHourlyForecast({
+    Success? success,
+    Failure? failure,
+    VoidCallback? onComplete,
+  });
 }
 
 class WeatherRoutes extends WeatherRoutesProtocol {
@@ -28,6 +33,31 @@ class WeatherRoutes extends WeatherRoutesProtocol {
       path: '/weather',
       method: 'GET',
       queryParameters: params.toMap(),
+    );
+
+    _provider.request(
+      endpoint: endpoint,
+      success: success,
+      failure: failure,
+      onComplete: onComplete,
+    );
+  }
+
+  @override
+  void getHourlyForecast({
+    Success? success,
+    Failure? failure,
+    VoidCallback? onComplete,
+  }) {
+    final endpoint = Endpoint(
+      path: '/forecast',
+      method: 'GET',
+      queryParameters: {
+        'lat': -22.5365,
+        'lon': -55.7267,
+        'units': 'metric',
+        'cnt': 10,
+      },
     );
 
     _provider.request(
