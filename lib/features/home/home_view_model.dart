@@ -53,12 +53,17 @@ class HomeViewModel extends HomeProtocol {
           latitude: position.latitude,
           longitude: position.longitude,
         );
+        _getCurrentWeather();
+      },
+      failure: () {
+        _errorMessage = 'Acesso à localização negado';
+        _setLoading(false);
       },
     );
-    _getCurrentWeather();
   }
 
   void _getCurrentWeather() {
+    if (_errorMessage.isNotEmpty) _errorMessage = '';
     getCurrentWeatherUseCase.execute(
       params: _weatherRequest,
       success: (currentWeather) {
