@@ -1,32 +1,45 @@
 import 'dart:ui';
 
 import 'package:flutter/src/painting/text_style.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class AppFonts {
   AppFonts._();
 
-  static TextStyle poppinsRegular(double size, [Color? color]) {
-    return GoogleFonts.poppins(
+  static const String circeFontFamily = 'Circe';
+
+  static TextStyle circeExtraLight(double size, [Color? color]) {
+    return TextStyle(
       color: color,
       fontSize: size,
-      fontWeight: FontWeight.normal,
+      fontWeight: FontWeight.w200,
+      fontFamily: circeFontFamily,
     );
   }
 
-  static TextStyle poppinsSemiBold(double size, [Color? color]) {
-    return GoogleFonts.poppins(
+  static TextStyle circeLight(double size, [Color? color]) {
+    return TextStyle(
       color: color,
       fontSize: size,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w300,
+      fontFamily: circeFontFamily,
     );
   }
 
-  static TextStyle poppinsBold(double size, [Color? color]) {
-    return GoogleFonts.poppins(
+  static TextStyle circeRegular(double size, [Color? color]) {
+    return TextStyle(
       color: color,
       fontSize: size,
-      fontWeight: FontWeight.bold,
+      fontWeight: FontWeight.w400,
+      fontFamily: circeFontFamily,
+    );
+  }
+
+  static TextStyle circeBold(double size, [Color? color]) {
+    return TextStyle(
+      color: color,
+      fontSize: size,
+      fontWeight: FontWeight.w700,
+      fontFamily: circeFontFamily,
     );
   }
 }

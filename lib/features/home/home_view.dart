@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 
-import '../../support/style/app_assets.dart';
 import '../../support/style/app_colors.dart';
 import '../../support/style/app_fonts.dart';
 
 abstract class HomeViewModelProtocol with ChangeNotifier {
   bool get isLoading;
+
+  String get temMin;
+  String get tempMax;
   String get humidity;
-  String get iconPath;
   String get localName;
   String get windSpeed;
   String get description;
   String get errorMessage;
   String get currentTemperature;
+  String get feelsLikeTemperature;
 }
 
 class HomeView extends StatelessWidget {
@@ -23,84 +25,143 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.white, // TODO: Mover para o app assets
       body: SafeArea(
         child: ListenableBuilder(
           listenable: viewModel,
           builder: (_, __) {
-            return _bodyWidget;
+            return CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  backgroundColor: Colors.transparent,
+                  title: const Text('Your location'),
+                  actions: [
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.list),
+                    ),
+                  ],
+                ),
+                ..._bodySlivers
+              ],
+            );
           },
         ),
       ),
     );
   }
 
-  Widget get _bodyWidget {
+  List<Widget> get _bodySlivers {
     if (viewModel.isLoading) {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
+      return [
+        const SliverFillRemaining(
+          child: Center(
+            child: CircularProgressIndicator(), // TODO: Achar uma animação de loading
+          ),
+        ),
+      ];
     }
 
     if (viewModel.errorMessage.isNotEmpty) {
-      return Center(
-        child: Text(viewModel.errorMessage),
-      );
+      return [
+        SliverFillRemaining(
+          child: Center(
+            child: Text(viewModel.errorMessage), // TODO: Adicionar uma imagem de erro
+          ),
+        )
+      ];
     }
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Image.asset(
-                AppAssets.icMarker,
-                width: 32,
-              ),
-              const SizedBox(width: 16),
-              Text(
+    return [
+      SliverFillRemaining(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Divider(),
+            const Spacer(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
                 viewModel.localName,
-                style: AppFonts.poppinsSemiBold(24, AppColors.darkGray),
+                style: AppFonts.circeLight(16, AppColors.black),
               ),
-            ],
-          ),
-          const Spacer(),
-          Image.network(viewModel.iconPath),
-          Text(
-            viewModel.description,
-            style: AppFonts.poppinsSemiBold(18, AppColors.darkGray),
-          ),
-          Text(
-            viewModel.currentTemperature,
-            style: AppFonts.poppinsSemiBold(72, AppColors.darkGray),
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Image.asset(
-                AppAssets.icWind,
-                width: 16,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: FittedBox(
+                      child: Text(
+                        viewModel.currentTemperature,
+                        style: AppFonts.circeBold(96, AppColors.black),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          viewModel.description,
+                          style: AppFonts.circeLight(18, AppColors.black),
+                        ),
+                        Wrap(
+                          children: [
+                            Text(
+                              'Feels like ',
+                              style: AppFonts.circeLight(18, AppColors.black),
+                            ),
+                            Text(
+                              viewModel.feelsLikeTemperature,
+                              style: AppFonts.circeBold(18, AppColors.black),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(width: 8),
-              Text(
-                viewModel.windSpeed,
-                style: AppFonts.poppinsRegular(14, AppColors.darkGray),
+            ),
+            const Spacer(),
+            const Divider(),
+            const Spacer(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Row(
+                      children: [
+                        const Text('Humidity'),
+                        const SizedBox(width: 12),
+                        Text(
+                          viewModel.humidity,
+                          style: AppFonts.circeBold(16, AppColors.black),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Row(
+                      children: [
+                        const Text('Wind'),
+                        const SizedBox(width: 12),
+                        Text(
+                          viewModel.windSpeed,
+                          style: AppFonts.circeBold(16, AppColors.black),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(width: 16),
-              Image.asset(
-                AppAssets.icHumidity,
-                width: 16,
-              ),
-              const SizedBox(width: 8),
-              Text(
-                viewModel.humidity,
-                style: AppFonts.poppinsRegular(14, AppColors.darkGray),
-              )
-            ],
-          ),
-          const Spacer(flex: 2),
-        ],
+            ),
+            const Spacer(),
+          ],
+        ),
       ),
-    );
+    ];
   }
 }

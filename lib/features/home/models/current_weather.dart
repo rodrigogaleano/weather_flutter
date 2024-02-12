@@ -1,8 +1,13 @@
 class CurrentWeather {
+  int humidity;
+
   String icon;
   String localName;
   String description;
-  int humidity;
+
+  double tempMax;
+  double tempMin;
+  double feelsLike;
   double windSpeed;
   double temperature;
 
@@ -11,7 +16,10 @@ class CurrentWeather {
         icon = map['weather'][0]['icon'],
         windSpeed = map['wind']['speed'],
         temperature = map['main']['temp'],
+        tempMax = map['main']['temp_max'],
+        tempMin = map['main']['temp_min'],
         humidity = map['main']['humidity'],
+        feelsLike = map['main']['feels_like'],
         description = map['weather'][0]['main'];
 }
 

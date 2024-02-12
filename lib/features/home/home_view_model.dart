@@ -1,5 +1,4 @@
 import '../../support/extensions/double.dart';
-import '../../support/utils/constants.dart';
 import '../../support/utils/geo_locator/geo_locator_provider.dart';
 import 'home_view_controller.dart';
 import 'models/current_weather.dart';
@@ -35,14 +34,23 @@ class HomeViewModel extends HomeProtocol {
   @override
   String get description => _currentWeather.description;
 
-  @override
-  String get iconPath => Constants.openWeatherIconBaseUrl(_currentWeather.icon);
+  // @override
+  // String get iconPath => Constants.openWeatherIconBaseUrl(_currentWeather.icon);
 
   @override
   String get currentTemperature => '${_currentWeather.temperature.round()}\u00B0';
 
   @override
   String get windSpeed => '${_currentWeather.windSpeed.toKilometerPerHour()}km/h';
+
+  @override
+  String get feelsLikeTemperature => '${_currentWeather.feelsLike.round()}\u00B0'; // TODO: l10n
+
+  @override
+  String get temMin => '${_currentWeather.tempMin.round()}\u00B0';
+
+  @override
+  String get tempMax => '${_currentWeather.tempMax.round()}\u00B0';
 
   @override
   Future<void> loadContent() async {
