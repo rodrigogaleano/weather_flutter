@@ -70,6 +70,11 @@ class HomeViewModel extends HomeProtocol {
     );
   }
 
+  @override
+  void didTapCitiesList() {
+    onTapCitiesList?.call();
+  }
+
   void _getCurrentWeather() {
     if (_errorMessage.isNotEmpty) _errorMessage = '';
     getCurrentWeatherUseCase.execute(

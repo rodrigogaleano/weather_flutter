@@ -1,11 +1,23 @@
 class ApiHost {
   ApiHost._();
 
-  static String get baseURL {
-    return 'https://api.openweathermap.org/data/$apiVersion';
+  /// Data Base URL
+
+  static String get dataBaseUrl {
+    return 'https://api.openweathermap.org/data/$dataApiVersion';
   }
 
-  static String get apiVersion => '2.5';
+  static String get dataApiVersion => '2.5';
+
+  /// Geo Base URL
+
+  static String get geoBaseUrl {
+    return 'http://api.openweathermap.org/geo/$geoApiVersion/';
+  }
+
+  static String get geoApiVersion => '1.0';
+
+  /// Default Parameters
 
   static Map<String, String> get defaultQueryParams {
     return {

@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 
+import '../../../features/cities_list/di/cities_module.dart';
 import '../../../features/home/di/home_module.dart';
 import 'app_module.dart';
 import 'commons_module.dart';
@@ -39,6 +40,7 @@ class ServiceLocator {
 void initializeDependencies() {
   final appModules = <AppModule>[
     HomeModule(),
+    CitiesModule(),
     CommonsModule(),
   ];
 

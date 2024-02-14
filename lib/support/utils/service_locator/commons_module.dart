@@ -1,3 +1,4 @@
+import '../../../api/routes/cities_routes.dart';
 import '../../../api/routes/weather_routes.dart';
 import '../../../api/setup/api_provider.dart';
 import '../geo_locator/geo_locator_provider.dart';
@@ -9,6 +10,7 @@ class CommonsModule extends AppModule {
   void registerDependencies() {
     /// API Routes
     ServiceLocator.registerFactory<WeatherRoutesProtocol>(() => WeatherRoutes());
+    ServiceLocator.registerFactory<CitiesRoutesProtocol>(() => CitiesRoutes());
 
     /// Singletons
     ServiceLocator.registerSingleton<ApiProvider>(ApiProvider.instance);

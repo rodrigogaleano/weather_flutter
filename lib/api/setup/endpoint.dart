@@ -4,6 +4,7 @@ class Endpoint {
   String method;
   String? contentType;
   Map<String, dynamic>? queryParameters;
+  String? baseUrl;
 
   Endpoint({
     required this.path,
@@ -11,5 +12,6 @@ class Endpoint {
     this.data,
     this.contentType,
     this.queryParameters,
+    this.baseUrl,
   });
 }

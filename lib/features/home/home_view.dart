@@ -15,6 +15,8 @@ abstract class HomeViewModelProtocol with ChangeNotifier {
   String get errorMessage;
   String get currentTemperature;
   String get feelsLikeTemperature;
+
+  void didTapCitiesList();
 }
 
 class HomeView extends StatelessWidget {
@@ -37,7 +39,7 @@ class HomeView extends StatelessWidget {
                   title: const Text('Your location'),
                   actions: [
                     IconButton(
-                      onPressed: () {},
+                      onPressed: viewModel.didTapCitiesList,
                       icon: const Icon(Icons.list),
                     ),
                   ],

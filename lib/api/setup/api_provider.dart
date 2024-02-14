@@ -16,7 +16,7 @@ class ApiProvider {
   static final ApiProvider instance = ApiProvider._();
 
   ApiProvider._({Dio? dio}) {
-    final baseOptions = BaseOptions(baseUrl: ApiHost.baseURL);
+    final baseOptions = BaseOptions(baseUrl: ApiHost.dataBaseUrl);
 
     _dio = dio ?? Dio(baseOptions);
 
@@ -31,6 +31,10 @@ class ApiProvider {
     Failure? failure,
     VoidCallback? onComplete,
   }) async {
+    final finalBaseUrl = endpoint.baseUrl ?? ApiHost.dataBaseUrl;
+
+    _dio.options.baseUrl = finalBaseUrl;
+
     _dio.options.queryParameters.addAll(ApiHost.defaultQueryParams);
     final contentTypeValue = endpoint.contentType ?? ContentType.json.value;
     final requestOptions = Options(
