@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../router/mobile_router.dart';
 import '../../support/utils/service_locator/service_locator.dart';
-import '../cities_list/cities_view_controller.dart';
 import 'home_view.dart';
 
 abstract class HomeProtocol extends HomeViewModelProtocol {
@@ -34,11 +35,7 @@ class _HomeViewControllerState extends State<HomeViewController> {
 
   void _bind() {
     viewModel.onTapCitiesList = () {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => const CitiesViewController(),
-        ),
-      );
+      context.goNamed(MobileRouter.citiesListRoute);
     };
   }
 }

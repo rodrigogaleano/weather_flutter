@@ -1,12 +1,17 @@
 import '../../models/city.dart';
 import 'city_item_view.dart';
 
+abstract class CityItemDelegate {
+  void didTapCity({required String cityName});
+}
+
 class CityItemViewModel extends CityItemViewModelProtocol {
   /// Init
 
   final City city;
+  final CityItemDelegate delegate;
 
-  CityItemViewModel({required this.city});
+  CityItemViewModel({required this.city, required this.delegate});
 
   /// Public Getters
 
@@ -20,6 +25,6 @@ class CityItemViewModel extends CityItemViewModelProtocol {
 
   @override
   void didTapCity() {
-    // TODO: Implementar metodo
+    delegate.didTapCity(cityName: city.name);
   }
 }

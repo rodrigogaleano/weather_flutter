@@ -6,10 +6,14 @@ import 'models/weather_request.dart';
 import 'use_cases/get_current_weather_use_case.dart';
 
 class HomeViewModel extends HomeProtocol {
+  /// Private Properties
+
   bool _isLoading = false;
   String _errorMessage = '';
   late CurrentWeather _currentWeather;
   late WeatherRequest _weatherRequest;
+
+  /// Init
 
   final GeoLocatorProviderProtocol geoLocatorProvider;
   final GetCurrentWeatherUseCaseProtocol getCurrentWeatherUseCase;
@@ -18,6 +22,8 @@ class HomeViewModel extends HomeProtocol {
     required this.geoLocatorProvider,
     required this.getCurrentWeatherUseCase,
   });
+
+  /// Public Getters
 
   @override
   bool get isLoading => _isLoading;
@@ -52,6 +58,8 @@ class HomeViewModel extends HomeProtocol {
   @override
   String get tempMax => '${_currentWeather.tempMax.round()}\u00B0';
 
+  /// Public Methods
+
   @override
   Future<void> loadContent() async {
     _setLoading(true);
@@ -74,6 +82,8 @@ class HomeViewModel extends HomeProtocol {
   void didTapCitiesList() {
     onTapCitiesList?.call();
   }
+
+  /// Private Methods
 
   void _getCurrentWeather() {
     if (_errorMessage.isNotEmpty) _errorMessage = '';

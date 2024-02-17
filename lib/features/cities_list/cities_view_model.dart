@@ -7,8 +7,9 @@ import 'components/city_item/city_item_view_model.dart';
 import 'models/city.dart';
 import 'use_cases/get_cities_use_case.dart';
 
-class CitiesViewModel extends CitiesProtocol {
+class CitiesViewModel extends CitiesProtocol implements CityItemDelegate {
   /// Private Properties
+
   String _searchQuery = '';
   bool _isLoading = false;
   String _errorMessage = '';
@@ -44,11 +45,25 @@ class CitiesViewModel extends CitiesProtocol {
   @override
   List<CityItemViewModelProtocol> get cityViewModels {
     return _cities.map((city) {
-      return CityItemViewModel(city: city);
+      return CityItemViewModel(city: city, delegate: this);
     }).toList();
   }
 
   /// Public Methods
+
+  @override
+  void removeFocus() {
+    onRemoveFocus?.call();
+  }
+
+  /// Delegate
+
+  @override
+  void didTapCity({required String cityName}) {
+    onTapCity?.call(cityName);
+  }
+
+  /// Private Methods
 
   void _getCities() {
     _errorMessage = '';
@@ -65,13 +80,6 @@ class CitiesViewModel extends CitiesProtocol {
       onComplete: () => _setLoading(false),
     );
   }
-
-  @override
-  void removeFocus() {
-    onRemoveFocus?.call();
-  }
-
-  /// Private Methods
 
   void _setLoading(bool loadingStatus) {
     _isLoading = loadingStatus;
