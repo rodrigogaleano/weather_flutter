@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../support/components/weather_view.dart';
 import '../../support/style/app_colors.dart';
-import '../../support/style/app_fonts.dart';
 
 abstract class HomeViewModelProtocol with ChangeNotifier {
   bool get isLoading;
@@ -44,7 +44,17 @@ class HomeView extends StatelessWidget {
                     ),
                   ],
                 ),
-                ..._bodySlivers
+                // ..._bodySlivers
+                WeatherView(
+                  humidity: viewModel.humidity,
+                  isLoading: viewModel.isLoading,
+                  localName: viewModel.localName,
+                  windSpeed: viewModel.windSpeed,
+                  description: viewModel.description,
+                  errorMessage: viewModel.errorMessage,
+                  currentTemperature: viewModel.currentTemperature,
+                  feelsLikeTemperature: viewModel.feelsLikeTemperature,
+                ),
               ],
             );
           },
@@ -53,117 +63,117 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  List<Widget> get _bodySlivers {
-    if (viewModel.isLoading) {
-      return [
-        const SliverFillRemaining(
-          child: Center(
-            child: CircularProgressIndicator(), // TODO: Achar uma animação de loading
-          ),
-        ),
-      ];
-    }
+  // List<Widget> get _bodySlivers {
+  //   if (viewModel.isLoading) {
+  //     return [
+  //       const SliverFillRemaining(
+  //         child: Center(
+  //           child: CircularProgressIndicator(), // TODO: Achar uma animação de loading
+  //         ),
+  //       ),
+  //     ];
+  //   }
 
-    if (viewModel.errorMessage.isNotEmpty) {
-      return [
-        SliverFillRemaining(
-          child: Center(
-            child: Text(viewModel.errorMessage), // TODO: Adicionar uma imagem de erro
-          ),
-        )
-      ];
-    }
+  //   if (viewModel.errorMessage.isNotEmpty) {
+  //     return [
+  //       SliverFillRemaining(
+  //         child: Center(
+  //           child: Text(viewModel.errorMessage), // TODO: Adicionar uma imagem de erro
+  //         ),
+  //       )
+  //     ];
+  //   }
 
-    return [
-      SliverFillRemaining(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const Divider(),
-            const Spacer(),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                viewModel.localName,
-                style: AppFonts.circeLight(16, AppColors.black),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: FittedBox(
-                      child: Text(
-                        viewModel.currentTemperature,
-                        style: AppFonts.circeBold(96, AppColors.black),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          viewModel.description,
-                          style: AppFonts.circeLight(18, AppColors.black),
-                        ),
-                        Wrap(
-                          children: [
-                            Text(
-                              'Feels like ',
-                              style: AppFonts.circeLight(18, AppColors.black),
-                            ),
-                            Text(
-                              viewModel.feelsLikeTemperature,
-                              style: AppFonts.circeBold(18, AppColors.black),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const Spacer(),
-            const Divider(),
-            const Spacer(),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Row(
-                      children: [
-                        const Text('Humidity'),
-                        const SizedBox(width: 12),
-                        Text(
-                          viewModel.humidity,
-                          style: AppFonts.circeBold(16, AppColors.black),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Row(
-                      children: [
-                        const Text('Wind'),
-                        const SizedBox(width: 12),
-                        Text(
-                          viewModel.windSpeed,
-                          style: AppFonts.circeBold(16, AppColors.black),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const Spacer(),
-          ],
-        ),
-      ),
-    ];
-  }
+  //   return [
+  //     SliverFillRemaining(
+  //       child: Column(
+  //         crossAxisAlignment: CrossAxisAlignment.stretch,
+  //         children: [
+  //           const Divider(),
+  //           const Spacer(),
+  //           Padding(
+  //             padding: const EdgeInsets.symmetric(horizontal: 20),
+  //             child: Text(
+  //               viewModel.localName,
+  //               style: AppFonts.circeLight(16, AppColors.black),
+  //             ),
+  //           ),
+  //           Padding(
+  //             padding: const EdgeInsets.symmetric(horizontal: 20),
+  //             child: Row(
+  //               children: [
+  //                 Expanded(
+  //                   child: FittedBox(
+  //                     child: Text(
+  //                       viewModel.currentTemperature,
+  //                       style: AppFonts.circeBold(96, AppColors.black),
+  //                     ),
+  //                   ),
+  //                 ),
+  //                 Expanded(
+  //                   child: Column(
+  //                     crossAxisAlignment: CrossAxisAlignment.end,
+  //                     children: [
+  //                       Text(
+  //                         viewModel.description,
+  //                         style: AppFonts.circeLight(18, AppColors.black),
+  //                       ),
+  //                       Wrap(
+  //                         children: [
+  //                           Text(
+  //                             'Feels like ',
+  //                             style: AppFonts.circeLight(18, AppColors.black),
+  //                           ),
+  //                           Text(
+  //                             viewModel.feelsLikeTemperature,
+  //                             style: AppFonts.circeBold(18, AppColors.black),
+  //                           ),
+  //                         ],
+  //                       ),
+  //                     ],
+  //                   ),
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //           const Spacer(),
+  //           const Divider(),
+  //           const Spacer(),
+  //           Padding(
+  //             padding: const EdgeInsets.symmetric(horizontal: 20),
+  //             child: Row(
+  //               children: [
+  //                 Expanded(
+  //                   child: Row(
+  //                     children: [
+  //                       const Text('Humidity'),
+  //                       const SizedBox(width: 12),
+  //                       Text(
+  //                         viewModel.humidity,
+  //                         style: AppFonts.circeBold(16, AppColors.black),
+  //                       ),
+  //                     ],
+  //                   ),
+  //                 ),
+  //                 Expanded(
+  //                   child: Row(
+  //                     children: [
+  //                       const Text('Wind'),
+  //                       const SizedBox(width: 12),
+  //                       Text(
+  //                         viewModel.windSpeed,
+  //                         style: AppFonts.circeBold(16, AppColors.black),
+  //                       ),
+  //                     ],
+  //                   ),
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //           const Spacer(),
+  //         ],
+  //       ),
+  //     ),
+  //   ];
+  // }
 }
