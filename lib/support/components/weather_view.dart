@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../style/app_colors.dart';
-import '../style/app_fonts.dart';
+import 'details_info_section.dart';
+import 'main_info_section.dart';
 
 class WeatherView extends StatelessWidget {
   final String tempMax;
@@ -34,124 +34,19 @@ class WeatherView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const Divider(),
-          const Spacer(),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Text(
-              localName,
-              style: AppFonts.circeLight(16, AppColors.black),
-            ),
+          MainInfoSection(
+            localName: localName,
+            description: description,
+            currentTemperature: currentTemperature,
+            feelsLikeTemperature: feelsLikeTemperature,
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              children: [
-                Expanded(
-                  child: FittedBox(
-                    child: Text(
-                      currentTemperature,
-                      style: AppFonts.circeBold(96, AppColors.black),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        description,
-                        style: AppFonts.circeLight(18, AppColors.black),
-                      ),
-                      Wrap(
-                        children: [
-                          Text(
-                            'Feels like ',
-                            style: AppFonts.circeLight(18, AppColors.black),
-                          ),
-                          Text(
-                            feelsLikeTemperature,
-                            style: AppFonts.circeBold(18, AppColors.black),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const Spacer(),
           const Divider(),
-          const Spacer(),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Row(
-                        children: [
-                          const Icon(Icons.arrow_upward),
-                          Text(
-                            tempMax,
-                            style: AppFonts.circeBold(24),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: Row(
-                        children: [
-                          const Icon(Icons.arrow_downward),
-                          Text(
-                            tempMin,
-                            style: AppFonts.circeBold(24),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Row(
-                        children: [
-                          Text(
-                            'Humidity',
-                            style: AppFonts.circeLight(18, AppColors.black),
-                          ),
-                          const SizedBox(width: 12),
-                          Text(
-                            humidity,
-                            style: AppFonts.circeBold(16, AppColors.black),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: Row(
-                        children: [
-                          Text(
-                            'Wind',
-                            style: AppFonts.circeLight(18, AppColors.black),
-                          ),
-                          const SizedBox(width: 12),
-                          Text(
-                            windSpeed,
-                            style: AppFonts.circeBold(16, AppColors.black),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+          DetailsInfoSection(
+            tempMax: tempMax,
+            tempMin: tempMin,
+            humidity: humidity,
+            windSpeed: windSpeed,
           ),
-          const Spacer(),
         ],
       ),
     );

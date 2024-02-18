@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../support/components/weather_view.dart';
+import '../../support/style/app_colors.dart';
+import '../../support/style/app_fonts.dart';
 
 abstract class CityViewModelProtocol with ChangeNotifier {
   bool get isLoading;
@@ -33,8 +35,13 @@ class CityView extends StatelessWidget {
             return CustomScrollView(
               slivers: [
                 SliverAppBar(
+                  centerTitle: true,
+                  toolbarHeight: 100,
                   backgroundColor: Colors.transparent,
-                  title: Text(viewModel.localName),
+                  title: Text(
+                    viewModel.localName,
+                    style: AppFonts.circeBold(36, AppColors.black),
+                  ),
                   // TODO: Fazer feature de favoritar cidade
                   // actions: [
                   //   IconButton(

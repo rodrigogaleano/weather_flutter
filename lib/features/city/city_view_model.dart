@@ -33,10 +33,10 @@ class CityViewModel extends CityProtocol {
   String get humidity => '${_currentWeather.humidity}%';
 
   @override
-  String get localName => _currentWeather.localName;
+  String get localName => _currentWeather.localName.toLowerCase();
 
   @override
-  String get description => _currentWeather.description;
+  String get description => _currentWeather.description.toLowerCase();
 
   // @override
   // String get iconPath => Constants.openWeatherIconBaseUrl(_currentWeather.icon);

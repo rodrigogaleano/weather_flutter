@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../support/components/weather_view.dart';
 import '../../support/style/app_colors.dart';
+import '../../support/style/app_fonts.dart';
 
 abstract class HomeViewModelProtocol with ChangeNotifier {
   bool get isLoading;
@@ -35,8 +36,12 @@ class HomeView extends StatelessWidget {
             return CustomScrollView(
               slivers: [
                 SliverAppBar(
+                  toolbarHeight: 100,
                   backgroundColor: Colors.transparent,
-                  title: const Text('Your location'),
+                  title: Text(
+                    'your location',
+                    style: AppFonts.circeBold(36, AppColors.black),
+                  ),
                   actions: [
                     IconButton(
                       onPressed: viewModel.didTapCitiesList,
