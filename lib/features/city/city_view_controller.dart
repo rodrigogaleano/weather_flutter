@@ -28,6 +28,6 @@ class _CityViewControllerState extends State<CityViewController> {
 
   @override
   Widget build(BuildContext context) {
-    return const CityView();
+    return CityView(viewModel: viewModel);
   }
 }

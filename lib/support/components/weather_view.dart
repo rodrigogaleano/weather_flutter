@@ -4,7 +4,6 @@ import '../style/app_colors.dart';
 import '../style/app_fonts.dart';
 
 class WeatherView extends StatelessWidget {
-  final bool isLoading;
   final String humidity;
   final String localName;
   final String windSpeed;
@@ -15,7 +14,6 @@ class WeatherView extends StatelessWidget {
 
   const WeatherView({
     required this.humidity,
-    required this.isLoading,
     required this.localName,
     required this.windSpeed,
     required this.errorMessage,
@@ -27,22 +25,6 @@ class WeatherView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (isLoading) {
-      return const SliverFillRemaining(
-        child: Center(
-          child: CircularProgressIndicator(), // TODO: Achar uma animação de loading
-        ),
-      );
-    }
-
-    if (errorMessage.isNotEmpty) {
-      return SliverFillRemaining(
-        child: Center(
-          child: Text(errorMessage), // TODO: Adicionar uma imagem de erro
-        ),
-      );
-    }
-
     return SliverFillRemaining(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
