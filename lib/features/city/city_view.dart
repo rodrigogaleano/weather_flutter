@@ -70,6 +70,8 @@ class CityView extends StatelessWidget {
     }
 
     return WeatherView(
+      tempMax: viewModel.tempMax,
+      tempMin: viewModel.tempMin,
       humidity: viewModel.humidity,
       localName: viewModel.localName,
       windSpeed: viewModel.windSpeed,

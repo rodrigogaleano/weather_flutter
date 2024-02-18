@@ -53,7 +53,7 @@ class HomeViewModel extends HomeProtocol {
   String get feelsLikeTemperature => '${_currentWeather.feelsLike.round()}\u00B0'; // TODO: l10n
 
   @override
-  String get temMin => '${_currentWeather.tempMin.round()}\u00B0';
+  String get tempMin => '${_currentWeather.tempMin.round()}\u00B0';
 
   @override
   String get tempMax => '${_currentWeather.tempMax.round()}\u00B0';

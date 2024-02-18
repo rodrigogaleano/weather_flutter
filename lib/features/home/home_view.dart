@@ -6,7 +6,7 @@ import '../../support/style/app_colors.dart';
 abstract class HomeViewModelProtocol with ChangeNotifier {
   bool get isLoading;
 
-  String get temMin;
+  String get tempMin;
   String get tempMax;
   String get humidity;
   String get localName;
@@ -71,6 +71,8 @@ class HomeView extends StatelessWidget {
     }
 
     return WeatherView(
+      tempMax: viewModel.tempMax,
+      tempMin: viewModel.tempMin,
       humidity: viewModel.humidity,
       localName: viewModel.localName,
       windSpeed: viewModel.windSpeed,

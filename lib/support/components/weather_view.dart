@@ -4,6 +4,8 @@ import '../style/app_colors.dart';
 import '../style/app_fonts.dart';
 
 class WeatherView extends StatelessWidget {
+  final String tempMax;
+  final String tempMin;
   final String humidity;
   final String localName;
   final String windSpeed;
@@ -13,6 +15,8 @@ class WeatherView extends StatelessWidget {
   final String feelsLikeTemperature;
 
   const WeatherView({
+    required this.tempMax,
+    required this.tempMin,
     required this.humidity,
     required this.localName,
     required this.windSpeed,
@@ -81,31 +85,68 @@ class WeatherView extends StatelessWidget {
           const Spacer(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
+            child: Column(
               children: [
-                Expanded(
-                  child: Row(
-                    children: [
-                      const Text('Humidity'),
-                      const SizedBox(width: 12),
-                      Text(
-                        humidity,
-                        style: AppFonts.circeBold(16, AppColors.black),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Row(
+                        children: [
+                          const Icon(Icons.arrow_upward),
+                          Text(
+                            tempMax,
+                            style: AppFonts.circeBold(24),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          const Icon(Icons.arrow_downward),
+                          Text(
+                            tempMin,
+                            style: AppFonts.circeBold(24),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
                 ),
-                Expanded(
-                  child: Row(
-                    children: [
-                      const Text('Wind'),
-                      const SizedBox(width: 12),
-                      Text(
-                        windSpeed,
-                        style: AppFonts.circeBold(16, AppColors.black),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Text(
+                            'Humidity',
+                            style: AppFonts.circeLight(18, AppColors.black),
+                          ),
+                          const SizedBox(width: 12),
+                          Text(
+                            humidity,
+                            style: AppFonts.circeBold(16, AppColors.black),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Text(
+                            'Wind',
+                            style: AppFonts.circeLight(18, AppColors.black),
+                          ),
+                          const SizedBox(width: 12),
+                          Text(
+                            windSpeed,
+                            style: AppFonts.circeBold(16, AppColors.black),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
