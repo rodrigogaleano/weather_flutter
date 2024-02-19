@@ -28,7 +28,6 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.white, // TODO: Mover para o app assets
       body: SafeArea(
         child: ListenableBuilder(
           listenable: viewModel,
@@ -37,9 +36,8 @@ class HomeView extends StatelessWidget {
               slivers: [
                 SliverAppBar(
                   toolbarHeight: 100,
-                  backgroundColor: Colors.transparent,
                   title: Text(
-                    'your location',
+                    'your location', // TODO: l10n
                     style: AppFonts.circeBold(36, AppColors.black),
                   ),
                   actions: [

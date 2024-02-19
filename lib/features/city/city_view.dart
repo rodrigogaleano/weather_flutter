@@ -37,11 +37,7 @@ class CityView extends StatelessWidget {
                 SliverAppBar(
                   centerTitle: true,
                   toolbarHeight: 100,
-                  backgroundColor: Colors.transparent,
-                  title: Text(
-                    viewModel.localName,
-                    style: AppFonts.circeBold(36, AppColors.black),
-                  ),
+                  title: _appBarTitle,
                   // TODO: Fazer feature de favoritar cidade
                   // actions: [
                   //   IconButton(
@@ -56,6 +52,17 @@ class CityView extends StatelessWidget {
           },
         ),
       ),
+    );
+  }
+
+  Widget get _appBarTitle {
+    if (viewModel.isLoading) {
+      return const SizedBox.shrink();
+    }
+
+    return Text(
+      viewModel.localName,
+      style: AppFonts.circeBold(36, AppColors.black),
     );
   }
 

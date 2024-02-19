@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../support/style/app_colors.dart';
+import '../../support/style/app_fonts.dart';
 import 'components/city_item/city_item_view.dart';
 
 abstract class CitiesViewModelProtocol with ChangeNotifier {
@@ -28,24 +30,31 @@ class CitiesView extends StatelessWidget {
               child: CustomScrollView(
                 slivers: [
                   SliverAppBar(
+                    pinned: true,
                     centerTitle: true,
-                    title: const Text('Cities'), // TODO: l10n
-                    expandedHeight: 160,
+                    toolbarHeight: 100,
+                    title: Text(
+                      'cities', // TODO: l10n
+                      style: AppFonts.circeBold(36, AppColors.black),
+                    ),
+                    expandedHeight: 180,
                     flexibleSpace: FlexibleSpaceBar(
-                      background: Container(
-                        padding: const EdgeInsets.all(20),
+                      background: Align(
                         alignment: Alignment.bottomCenter,
-                        child: TextFormField(
-                          controller: viewModel.searchBarController,
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: const InputDecoration(
-                            hintText: 'City',
-                            contentPadding: EdgeInsets.all(12),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(16)),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(16)),
+                        child: Container(
+                          margin: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: TextFormField(
+                            controller: viewModel.searchBarController,
+                            keyboardType: TextInputType.emailAddress,
+                            decoration: const InputDecoration(
+                              prefixIcon: Icon(Icons.search),
+                              hintText: 'search', // TODO: l10n
+                              contentPadding: EdgeInsets.all(12),
+                              border: InputBorder.none,
                             ),
                           ),
                         ),
@@ -83,7 +92,7 @@ class CitiesView extends StatelessWidget {
       ];
     }
 
-    if (viewModel.cityViewModels.isEmpty || viewModel.searchBarController.text.isEmpty) {
+    if (viewModel.searchBarController.text.isEmpty) {
       return [
         const SliverFillRemaining(
           child: Center(

@@ -19,7 +19,13 @@ class CityItemViewModel extends CityItemViewModelProtocol {
   String get name => city.name;
 
   @override
-  String get details => '${city.state}, ${city.country}';
+  String get details {
+    if (city.state != null) {
+      return '${city.state}, ${city.country}';
+    }
+
+    return city.country;
+  }
 
   /// Public Methods
 
