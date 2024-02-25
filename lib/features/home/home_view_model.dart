@@ -1,24 +1,33 @@
+import '../../support/components/forecast_item/forecast_item_view.dart';
+import '../../support/components/forecast_item/forecast_item_view_model.dart';
 import '../../support/extensions/double.dart';
 import '../../support/utils/geo_locator/geo_locator_provider.dart';
 import 'home_view_controller.dart';
 import 'models/current_weather.dart';
+import 'models/forecast.dart';
 import 'models/weather_request.dart';
 import 'use_cases/get_current_weather_use_case.dart';
+import 'use_cases/get_forecast_use_case.dart';
 
 class HomeViewModel extends HomeProtocol {
   /// Private Properties
 
-  bool _isLoading = false;
+  bool _isForecastLoading = true;
+  bool _isCurrentWeatherLoading = true;
   String _errorMessage = '';
+  late double _latitude;
+  late double _longitude;
+  late List<Forecast> _forecast;
   late CurrentWeather _currentWeather;
-  late WeatherRequest _weatherRequest;
 
   /// Init
 
   final GeoLocatorProviderProtocol geoLocatorProvider;
+  final GetForecastUseCaseProtocol getForecastUseCase;
   final GetCurrentWeatherUseCaseProtocol getCurrentWeatherUseCase;
 
   HomeViewModel({
+    required this.getForecastUseCase,
     required this.geoLocatorProvider,
     required this.getCurrentWeatherUseCase,
   });
@@ -26,7 +35,7 @@ class HomeViewModel extends HomeProtocol {
   /// Public Getters
 
   @override
-  bool get isLoading => _isLoading;
+  bool get isLoading => _isForecastLoading || _isCurrentWeatherLoading;
 
   @override
   String get errorMessage => _errorMessage;
@@ -40,6 +49,7 @@ class HomeViewModel extends HomeProtocol {
   @override
   String get description => _currentWeather.description.toLowerCase();
 
+  // TODO: remover se não for usar
   // @override
   // String get iconPath => Constants.openWeatherIconBaseUrl(_currentWeather.icon);
 
@@ -58,22 +68,28 @@ class HomeViewModel extends HomeProtocol {
   @override
   String get tempMax => '${_currentWeather.tempMax.round()}\u00B0';
 
+  @override
+  List<ForecastItemViewModelProtocol> get forecastViewModels {
+    return _forecast.map((forecast) {
+      return ForecastItemViewModel(forecast: forecast);
+    }).toList();
+  }
+
   /// Public Methods
 
   @override
   Future<void> loadContent() async {
-    _setLoading(true);
     await geoLocatorProvider.getCurrentPosition(
       success: (position) {
-        _weatherRequest = WeatherRequest(
-          latitude: position.latitude,
-          longitude: position.longitude,
-        );
+        _latitude = position.latitude;
+        _longitude = position.longitude;
         _getCurrentWeather();
+        _getForecast();
       },
       failure: () {
-        _errorMessage = 'Acesso à localização negado';
-        _setLoading(false);
+        _errorMessage = 'Acesso à localização negado'; // TODO: String no l10n
+        _setForecastLoading(false);
+        _setCurrentWeatherLoading(false);
       },
     );
   }
@@ -88,19 +104,42 @@ class HomeViewModel extends HomeProtocol {
   void _getCurrentWeather() {
     if (_errorMessage.isNotEmpty) _errorMessage = '';
     getCurrentWeatherUseCase.execute(
-      params: _weatherRequest,
+      params: WeatherRequest(latitude: _latitude, longitude: _longitude),
       success: (currentWeather) {
         _currentWeather = currentWeather;
       },
       failure: (error) {
         _errorMessage = error.description;
       },
-      onComplete: () => _setLoading(false),
+      onComplete: () => _setCurrentWeatherLoading(false),
     );
   }
 
-  void _setLoading(bool loadingStatus) {
-    _isLoading = loadingStatus;
+  void _getForecast() {
+    if (_errorMessage.isNotEmpty) _errorMessage = '';
+    getForecastUseCase.execute(
+      params: WeatherRequest(
+        count: 12, // TODO: Colocar numa constante
+        latitude: _latitude,
+        longitude: _longitude,
+      ),
+      success: (forecast) {
+        _forecast = forecast;
+      },
+      failure: (error) {
+        _errorMessage = error.description;
+      },
+      onComplete: () => _setForecastLoading(false),
+    );
+  }
+
+  void _setCurrentWeatherLoading(bool loadingStatus) {
+    _isCurrentWeatherLoading = loadingStatus;
+    notifyListeners();
+  }
+
+  void _setForecastLoading(bool loadingStatus) {
+    _isForecastLoading = loadingStatus;
     notifyListeners();
   }
 }

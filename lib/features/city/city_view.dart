@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../support/components/forecast_item/forecast_item_view.dart';
 import '../../support/components/weather_view.dart';
 import '../../support/style/app_colors.dart';
 import '../../support/style/app_fonts.dart';
@@ -16,6 +17,8 @@ abstract class CityViewModelProtocol with ChangeNotifier {
   String get errorMessage;
   String get currentTemperature;
   String get feelsLikeTemperature;
+
+  List<ForecastItemViewModelProtocol> get forecastViewModels;
 
   void didTapFavorite();
 }
@@ -92,6 +95,7 @@ class CityView extends StatelessWidget {
       description: viewModel.description,
       errorMessage: viewModel.errorMessage,
       currentTemperature: viewModel.currentTemperature,
+      forecastViewModels: viewModel.forecastViewModels,
       feelsLikeTemperature: viewModel.feelsLikeTemperature,
     );
   }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'details_info_section.dart';
+import 'forecast_item/forecast_item_view.dart';
+import 'forecast_section.dart';
 import 'main_info_section.dart';
 
 class WeatherView extends StatelessWidget {
@@ -13,6 +15,7 @@ class WeatherView extends StatelessWidget {
   final String errorMessage;
   final String currentTemperature;
   final String feelsLikeTemperature;
+  final List<ForecastItemViewModelProtocol> forecastViewModels;
 
   const WeatherView({
     required this.tempMax,
@@ -23,6 +26,7 @@ class WeatherView extends StatelessWidget {
     required this.description,
     required this.errorMessage,
     required this.currentTemperature,
+    required this.forecastViewModels,
     required this.feelsLikeTemperature,
     super.key,
   });
@@ -30,6 +34,7 @@ class WeatherView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverFillRemaining(
+      hasScrollBody: false,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -46,6 +51,10 @@ class WeatherView extends StatelessWidget {
             tempMin: tempMin,
             humidity: humidity,
             windSpeed: windSpeed,
+          ),
+          const Divider(),
+          ForecastSection(
+            forecastViewModels: forecastViewModels,
           ),
         ],
       ),

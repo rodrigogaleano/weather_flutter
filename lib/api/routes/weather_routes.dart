@@ -12,7 +12,8 @@ abstract class WeatherRoutesProtocol {
     Failure? failure,
     VoidCallback? onComplete,
   });
-  void getHourlyForecast({
+  void getForecast({
+    required WeatherRequest params,
     Success? success,
     Failure? failure,
     VoidCallback? onComplete,
@@ -43,9 +44,9 @@ class WeatherRoutes extends WeatherRoutesProtocol {
     );
   }
 
-  // TODO: Consumir rota
   @override
-  void getHourlyForecast({
+  void getForecast({
+    required WeatherRequest params,
     Success? success,
     Failure? failure,
     VoidCallback? onComplete,
@@ -53,12 +54,7 @@ class WeatherRoutes extends WeatherRoutesProtocol {
     final endpoint = Endpoint(
       path: '/forecast',
       method: 'GET',
-      queryParameters: {
-        'lat': -22.5365,
-        'lon': -55.7267,
-        'units': 'metric',
-        'cnt': 10,
-      },
+      queryParameters: params.toMap(),
     );
 
     _provider.request(

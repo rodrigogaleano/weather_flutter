@@ -40,10 +40,10 @@ class ServiceLocator {
 
 void initializeDependencies() {
   final appModules = <AppModule>[
+    CommonsModule(),
     HomeModule(),
     CityModule(),
     CitiesModule(),
-    CommonsModule(),
   ];
 
   for (final module in appModules) {
